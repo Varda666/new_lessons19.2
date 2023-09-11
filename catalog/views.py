@@ -7,7 +7,13 @@ def catalog_home(request):
 
 
 def catalog_contacts(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
+        print(f'{name}, {phone}, {message}')
     return render(request, 'contacts.html')
+
 
 
 def catalog_contacts_post(request):
