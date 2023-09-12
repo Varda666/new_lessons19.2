@@ -25,4 +25,4 @@ def catalog_contacts_post(request):
         message_dict['message'] = request.POST.get('message')
         messages_list.append(message_dict)
     print(messages_list)
-    return render(request, 'index.html')
+    # return render(request, 'index.html')
