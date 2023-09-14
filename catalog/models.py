@@ -2,17 +2,17 @@ from django.db import models
 
 # Create your models here.
 class Product(models.Model):
-    prod_name = models.CharField(max_length=150, verbose_name='наименование')
-    prod_desc = models.CharField(max_length=500, verbose_name='описание')
-    prod_imd = models.ImageField(upload_to='media/', verbose_name='изображение')
-    prod_cat = models.CharField(max_length=150, verbose_name='категория')
-    prod_price = models.PositiveIntegerField(verbose_name='цена за покупку')
-    prod_create = models.DateTimeField(verbose_name='дата создания')
-    prod_change = models.DateTimeField(verbose_name='дата последнего изменения')
+    name = models.CharField(max_length=150, verbose_name='наименование')
+    desc = models.TextField(verbose_name='описание')
+    imd = models.ImageField(upload_to='media/', verbose_name='изображение')
+    cat = models.ForeignKey('Category', on_delete=models.DO_NOTHING, verbose_name='категория')
+    price = models.PositiveIntegerField(verbose_name='цена за покупку')
+    create = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
+    change = models.DateTimeField(auto_now_add=True, verbose_name='дата последнего изменения')
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.prod_name}'
+        return self.name
 
     class Meta:
         verbose_name = 'товар' # Настройка для наименования одного объекта
@@ -20,14 +20,14 @@ class Product(models.Model):
 
 
 class Category(models.Model):
-    cat_name = models.CharField(max_length=150, verbose_name='наименование категории')
-    cat_desc = models.CharField(max_length=500, verbose_name='описание категории')
+    name = models.CharField(max_length=150, verbose_name='наименование категории')
+    desc = models.CharField(max_length=500, verbose_name='описание категории')
 
 
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.cat_name}'
+        return self.name
 
     class Meta:
         verbose_name = 'категория' # Настройка для наименования одного объекта
@@ -35,14 +35,14 @@ class Category(models.Model):
 
 
 class Contact(models.Model):
-    contact_name = models.CharField(max_length=150, verbose_name='имя')
-    contact_tel = models.CharField(max_length=50, verbose_name='телефон')
-    contact_message = models.CharField(max_length=500, verbose_name='сообщение')
+    name = models.CharField(max_length=150, verbose_name='имя')
+    tel = models.CharField(max_length=50, verbose_name='телефон')
+    message = models.CharField(max_length=500, verbose_name='сообщение')
 
 
     def __str__(self):
         # Строковое отображение объекта
-        return f'{self.contact_name}, {self.contact_tel}, {self.contact_message}'
+        return f'{self.name}, {self.tel}, {self.message}'
 
     class Meta:
         verbose_name = 'контакт' # Настройка для наименования одного объекта
