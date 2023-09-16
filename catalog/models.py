@@ -7,8 +7,8 @@ class Product(models.Model):
     imd = models.ImageField(upload_to='media/', verbose_name='изображение')
     cat = models.ForeignKey('Category', on_delete=models.DO_NOTHING, verbose_name='категория')
     price = models.PositiveIntegerField(verbose_name='цена за покупку')
-    create = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
-    change = models.DateTimeField(auto_now_add=True, verbose_name='дата последнего изменения')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='дата последнего изменения')
 
     def __str__(self):
         # Строковое отображение объекта
@@ -21,7 +21,7 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование категории')
-    desc = models.CharField(max_length=500, verbose_name='описание категории')
+    desc = models.TextField(verbose_name='описание категории')
 
 
 
