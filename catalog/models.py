@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование')
@@ -47,3 +48,5 @@ class Contact(models.Model):
     class Meta:
         verbose_name = 'контакт' # Настройка для наименования одного объекта
         verbose_name_plural = 'контакты' # Настройка для наименования набора объектов
+
+

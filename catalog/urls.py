@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib import admin
 
-from catalog.views import catalog_home, catalog_contacts, catalog_contacts_post
+from catalog.views import catalog_home, catalog_contacts, catalog_contacts_post, catalog_product, add_product
 from config import settings
 from django.conf.urls.static import static
 
@@ -11,7 +11,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', catalog_home, name='home'),
     path('contacts/', catalog_contacts, name='contacts'),
-    path('info/', catalog_contacts_post, name='catalog_contacts_post')
+    path('info/', catalog_contacts_post, name='catalog_contacts_post'),
+    path('product/', catalog_product, name='catalog_product'),
+    path('product_add/', add_product, name='add_product')
 ]
 
 if settings.DEBUG:

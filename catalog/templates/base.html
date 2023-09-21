@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Интернет-магазин</title>
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Интернет-магазин</h5>
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="/">Главная</a>
+        <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
+        <a class="p-2 btn btn-outline-primary" href="/products/">Товары</a>
+        <a class="p-2 btn btn-outline-primary" href="/product_add/">Добавить продукт</a>
+    </nav>
+</div>
+
+{% block content %}
+{# блок, который нужно будет расширять в шаблоне #}
+{% endblock %}
+
+</body>
+</html>
