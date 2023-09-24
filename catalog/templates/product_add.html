@@ -1,11 +1,11 @@
-{% extends 'catalog/templates/base.html' %} {# расширение базового шаблона #}
-
+{% extends 'base.html' %} {# расширение базового шаблона #}
+{% block content %}
 <div class="card-body">
     <form method="post" action="" class="form-floating">
         {% csrf_token %}
         <div class="mb-3">
-            <label for="name">Имя</label>
-            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя" required>
+            <label for="name">Название</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Название" required>
         </div>
         <div class="mb-3">
            <label for="desc">Описание</label>

@@ -1,12 +1,27 @@
 from django.db import models
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=150, unique=True, verbose_name='наименование категории')
+    desc = models.TextField(default='',verbose_name='описание категории')
+
+
+
+    def __str__(self):
+        # Строковое отображение объекта
+        return self.name
+
+    class Meta:
+        verbose_name = 'категория' # Настройка для наименования одного объекта
+        verbose_name_plural = 'категории' # Настройка для наименования набора объектов
+
+
 # Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name='наименование')
-    desc = models.TextField(verbose_name='описание')
+    desc = models.TextField(default='', verbose_name='описание')
     imd = models.ImageField(upload_to='media/', verbose_name='изображение')
-    cat = models.ForeignKey('Category', on_delete=models.DO_NOTHING, verbose_name='категория')
+    cat = models.ForeignKey('Category', to_field='name', on_delete=models.DO_NOTHING, verbose_name='категория')
     price = models.PositiveIntegerField(verbose_name='цена за покупку')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='дата последнего изменения')
@@ -20,23 +35,8 @@ class Product(models.Model):
         verbose_name_plural = 'товары' # Настройка для наименования набора объектов
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=150, verbose_name='наименование категории')
-    desc = models.TextField(verbose_name='описание категории')
-
-
-
-    def __str__(self):
-        # Строковое отображение объекта
-        return self.name
-
-    class Meta:
-        verbose_name = 'категория' # Настройка для наименования одного объекта
-        verbose_name_plural = 'категории' # Настройка для наименования набора объектов
-
-
 class Contact(models.Model):
-    name = models.CharField(max_length=150, verbose_name='имя')
+    name = models.CharField(max_length=150, db_index=True, verbose_name='имя')
     tel = models.CharField(max_length=50, verbose_name='телефон')
     message = models.CharField(max_length=500, verbose_name='сообщение')
 

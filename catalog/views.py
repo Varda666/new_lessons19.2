@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Product
+from catalog.models import Product, Contact
 from django.core.paginator import Paginator
 
 
@@ -18,21 +18,21 @@ def catalog_contacts(request):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
-        print(f'{name}, {phone}, {message}')
+        Contact.objects.create(name=name, tel=phone, message=message)
     return render(request, 'contacts.html')
 
 
 
-def catalog_contacts_post(request):
-    messages_list = []
-    message_dict = {}
-    if request.method == 'POST':
-        message_dict['name'] = request.POST.get('name')
-        message_dict['phone'] = request.POST.get('phone')
-        message_dict['message'] = request.POST.get('message')
-        messages_list.append(message_dict)
-    print(messages_list)
-    return render(request, 'index.html')
+# def catalog_contacts_post(request):
+#     messages_list = []
+#     message_dict = {}
+#     if request.method == 'POST':
+#         message_dict['name'] = request.POST.get('name')
+#         message_dict['phone'] = request.POST.get('phone')
+#         message_dict['message'] = request.POST.get('message')
+#         messages_list.append(message_dict)
+#     print(messages_list)
+#     return render(request, 'index.html')
 
 def catalog_product(request):
     product_list = Product.objects.all
