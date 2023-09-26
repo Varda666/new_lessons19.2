@@ -11,7 +11,7 @@ def path_to_full_path(path_):
         return ''
 
 
-@register.simple_tag(name='mediapath')
+@register.simple_tag(name='mediapath2')
 def path_to_full_path(path_):
     if path_:
         return f'/media/{path_}'

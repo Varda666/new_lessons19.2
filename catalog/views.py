@@ -23,13 +23,12 @@ def catalog_contacts(request):
     return render(request, 'contacts.html')
 
 
-def catalog_product(request):
-    product_list = Product.objects.all()
+def catalog_product(request, pk):
     # paginator = Paginator(product_list, 1)
     # page_number = request.GET.get('page')
     # page_obj = paginator.get_page(page_number)?  {'page_obj': page_obj}
     context = {
-        "object_list": product_list
+        "object_list": Product.objects.filter(pk=pk)
     }
     return render(request, 'product.html', context)
 
@@ -46,8 +45,10 @@ def add_product(request):
         cat2, _ = Category.objects.get_or_create(name='Фрукты', defaults={
             "desc": "Описание категории фрукты"
         })
+        imd = request.POST.get('imd')
         if str(cat) == str(cat1):
-            Product.objects.create(name=name, desc=desc, cat=cat1, price=price)
+            Product.objects.create(name=name, desc=desc, cat=cat1, price=price, imd=imd)
         elif str(cat) == str(cat2):
-            Product.objects.create(name=name, desc=desc, cat=cat2, price=price)
+            Product.objects.create(name=name, desc=desc, cat=cat2, price=price, imd=imd)
+
     return render(request, 'product_add.html')

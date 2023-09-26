@@ -3,22 +3,27 @@
 <div class="card-body">
     <form method="post" action="" class="form-floating">
         {% csrf_token %}
-        <div class="mb-3">
+        <div class="mb-6">
             <label for="name">Название</label>
             <input type="text" name="name" class="form-control" id="name" placeholder="Название" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-6">
            <label for="desc">Описание</label>
            <input type="text" name="desc" class="form-control" id="desc" placeholder="Описание" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-6>
            <label for="cat">Категория</label>
            <textarea type="text" name="cat" class="form-control" id="cat" placeholder="Категория" required></textarea>
         </div>
-         <div class="mb-3">
+         <div class="mb-6">
            <label for="price">Цена</label>
            <textarea type="text" name="price" class="form-control" id="price" placeholder="Цена" required></textarea>
         </div>
+        <div class="mb-6">
+           <label for="price">Изображение</label>
+           <textarea type="text" name="price" class="form-control" id="price" placeholder="Цена" required></textarea>
+        </div>
+
             <input class="btn btn-outline-primary w-100" type="submit" value="Отправить" />
     </form>
 </div>
