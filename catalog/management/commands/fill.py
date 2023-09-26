@@ -18,10 +18,10 @@ class Command(BaseCommand):
     #     Category.objects.bulk_create(category_for_create)
 
     def handle(self, *args, **options):
-        cat1 = Category.objects.get_or_create(name='Овощи', defaults={
+        cat1, _ = Category.objects.get_or_create(name='Овощи', defaults={
             "desc": "Описание категории овощи"
         })
-        cat2 = Category.objects.get_or_create(name='Фрукты', defaults={
+        cat2, _  = Category.objects.get_or_create(name='Фрукты', defaults={
             "desc": "Описание категории фрукты"
         })
 

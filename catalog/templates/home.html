@@ -6,10 +6,13 @@
     <p class="lead">Интернет-магазин - это отличный вариант продать</p>
 </div>
 
-{% for item in object_list %}
+{% for object in object_list %}
     <table class="table table-striped">
             <tr>
-            <td class="w-25">{{ item }}</td>
+                <a class="p-2 btn btn-outline-primary" href="/product/{{ object.pk }}/">
+                    {{ object.name }}
+                </a>
+                <div> {{ object.desc|slice:":100" }} </div>
             </tr>
     </table>
 {% endfor %}

@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Товар</h1>
+    <h1 class="display-4">{{ Product.name }}</h1>
 </div>
 
 <div class="container">
@@ -13,7 +13,8 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <tr>
-                            {% for product in page_obj %}
+<!--                            {% for object in object_list %}-->
+<!--                            <td class="w-25">{{ Product.pk }}</td>-->
                             <td class="w-25">{{ Product.name }}</td>
                             <td class="w-25">{{ Product.desc }}</td>
                             <td class="w-25">{{ Product.cat }}</td>
@@ -21,7 +22,7 @@
                             <td class="w-25">{{ Product.created_at }}</td>
                             <td class="w-25">{{ Product.updated_at }}</td>
                             <img src="{{ object.image|mediapath }}" />
-                            {% endfor %}
+<!--                            {% endfor %}-->
                         </tr>
                     </table>
                 </div>
