@@ -13,8 +13,8 @@
                 <div class="card-body">
                     <table class="table table-striped">
                         <tr>
-                            {% for object in object_list %}
-                            <td class="w-25">{{object.pk }}</td>
+
+                            <td class="w-25">{{ object.pk }}</td>
                             <td class="w-25">{{ object.name }}</td>
                             <td class="w-25">{{ object.desc }}</td>
                             <td class="w-25">{{ object.cat }}</td>
@@ -23,8 +23,16 @@
                             <td class="w-25">{{ object.updated_at }}</td>
                             <img class="card-img-top"
                             src="{{ object.imd|mediapath }}">
-                            {% endfor %}
+
                         </tr>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'catalog:update_product' object.pk %}"
+                                   class="btn btn-sm btn-outline-secondary">Update</a>
+                                <a href="{% url 'catalog:delete_product' object.pk %}"
+                                   class="btn btn-sm btn-outline-secondary">Delete</a>
+                            </div>
+                        </div>
                     </table>
                 </div>
             </div>

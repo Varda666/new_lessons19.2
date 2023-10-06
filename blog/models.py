@@ -14,7 +14,7 @@ class BlogMaterial(models.Model):
 
     def __str__(self):
         # Строковое отображение объекта
-        return self.name, self.slug
+        return self.name, self.slug, self.imd
 
     def get_absolute_url(self):
         return reverse('blogmaterial_detail', kwargs={'slug': self.slug})

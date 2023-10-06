@@ -10,7 +10,7 @@
 {% for object in object_list %}
     <table class="table table-striped">
             <tr>
-                <a class="p-2 btn btn-outline-primary" href="/product/{{ object.pk }}/">
+                <a class="p-2 btn btn-outline-primary" href="/detail/{{ object.pk }}/">
                     {{ object.name }}
                 </a>
                 <img src="{{ object.imd.url}}">
