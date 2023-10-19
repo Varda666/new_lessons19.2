@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog',
     'blog',
+    'users',
     ]
 
 MIDDLEWARE = [
@@ -137,3 +138,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'users.User'
+# LOGIN_URL = 'login'
+# LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URl = '/'
+LOGIN_REDIRECT_URl = '/'
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'qwe@oscarbot.ru'
+EMAIL_HOST_PASSWORD = '123qwe'
+EMAIL_USE_SSL = True

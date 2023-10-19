@@ -8,7 +8,8 @@ class ProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = '__all__'
+        exclude = ('user',)
+
 
     def clean_first_name(self):
         cleaned_data = self.cleaned_data.get('name', 'desc')

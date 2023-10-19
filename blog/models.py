@@ -19,6 +19,7 @@ class BlogMaterial(models.Model):
     def get_absolute_url(self):
         return reverse('blogmaterial_detail', kwargs={'slug': self.slug})
 
+
     class Meta:
         verbose_name = 'блог' # Настройка для наименования одного объекта
         verbose_name_plural = 'блоги' # Настройка для наименования набора объектов

@@ -1,19 +1,20 @@
-from django.db import transaction
 from django.forms import inlineformset_factory
-from django.shortcuts import render
+
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Contact, Category, Version
-from django.core.paginator import Paginator
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-# Create your views here.
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:list')
+
+    def get_queryset(self, *args, **kwargs):
+        return Product.user.filter(is_verificated=True, is_activated=True)
 
 
 class ProductListView(ListView):
@@ -38,15 +39,11 @@ class ProductDetailView(DetailView):
     #     return self.object
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
 
-    def get_success_url(self):
-        return reverse('catalog:update_product', args=[self.kwargs.get('pk')])
 
-    # def get_success_url(self):
-    #     return reverse('blog:view', args=[self.kwargs.get('pk')])
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         FormSet = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
@@ -68,9 +65,8 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
-
 
 
 class ContactCreateView(CreateView):

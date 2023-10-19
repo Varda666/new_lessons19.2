@@ -1,6 +1,7 @@
 from django.core.management import BaseCommand
 
 from catalog.models import Category, Product, Version
+from users.models import User
 
 
 class Command(BaseCommand):
@@ -16,8 +17,20 @@ class Command(BaseCommand):
         #     category_for_create.append(Category(**item))
         # Category.objects.all().delete()
         # Category.objects.bulk_create(category_for_create)
-        #
-        #
+
+        # users_list = [
+        #     {'email': 'ivor@yandex.ru', 'phone': '892345678', 'country': 'РФ', 'is_activated': True, 'is_verificated': True},
+        #     {'email': 'anna@yandex.ru', 'phone': '892378394', 'country': 'Бельгия', 'is_activated': True, 'is_verificated': True},
+        #     {'email': 'ignat@yandex.ru', 'phone': '892647839', 'country': 'РФ', 'is_activated': True, 'is_verificated': True}
+        # ]
+        # users_for_create = []
+        # for item in users_list:
+        #     users_for_create.append(User(**item))
+        # User.objects.all().delete()
+        # User.objects.bulk_create(users_for_create)
+
+
+
         # cat1, _ = Category.objects.get_or_create(name='Овощи', defaults={
         #     "desc": "Описание категории овощи"
         # })
@@ -25,9 +38,19 @@ class Command(BaseCommand):
         #     "desc": "Описание категории фрукты"
         # })
         #
+        # user1, _ = User.objects.get_or_create(email="ivor@yandex.ru", defaults={
+        #     'phone': '892345678',
+        #     'country': 'РФ'
+        # })
+        # user2, _ = User.objects.get_or_create(email="anna@yandex.ru", defaults={
+        #     'phone': '892378394',
+        #     'country': 'Бельгия'
+        # })
+        #
+        #
         # product_list = [
-        #     {'name': 'Помидор', 'desc': 'Описание помидорки', 'cat': cat1, 'price': '30'},
-        #     {'name': 'Арбуз', 'desc': 'Описание арбуза', 'cat': cat2, 'price' : '60'}
+        #     {'name': 'Помидор', 'desc': 'Описание помидорки', 'cat': cat1, 'price': '30', 'user': user1},
+        #     {'name': 'Арбуз', 'desc': 'Описание арбуза', 'cat': cat2, 'price': '60', 'user': user2}
         # ]
         # product_for_create = []
         # for item in product_list:

@@ -1,7 +1,9 @@
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from blog.models import BlogMaterial
+from config import settings
 
 
 class BlogMaterialCreateView(CreateView):
@@ -30,6 +32,16 @@ class BlogMaterialDetailView(DetailView):
         self.object.views_count += 1
         self.object.save()
         return self.object
+
+    def send_mess_email(self, queryset):
+        self.object = super().get_object(queryset)
+        if self.object.views_count > 10:
+            send_mail(
+                subject='Поздравление',
+                message='Поздравляем, у вас 10 просмотров',
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=['Varda666@inbox.ru']
+            )
 
 
 class BlogMaterialUpdateView(UpdateView):

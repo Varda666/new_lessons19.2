@@ -25,6 +25,7 @@ class Product(models.Model):
     price = models.PositiveIntegerField(verbose_name='цена за покупку')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='дата последнего изменения')
+    user = models.ForeignKey('users.User', to_field='email', default='',  on_delete=models.DO_NOTHING, verbose_name='владелец')
 
 
     def __str__(self):

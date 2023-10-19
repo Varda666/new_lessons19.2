@@ -3,6 +3,7 @@
 <form method="post" enctype="multipart/form-data" action="" class="form-floating">
     {% csrf_token %}
         <div class="card-body">
+        {% if user.is_authenticated %}
             {{form.as_p}}
 <!--        <div class="mb-6">-->
 <!--            <label for="name">Название</label>-->
@@ -26,13 +27,15 @@
 <!--        </div>-->
 
             <input class="btn btn-outline-primary w-100" type="submit" value="Отправить" />
+
         </div>
         <div class="card-body">
             {{ formset.management_form }}
             {% for form in formset.forms %}
                 {{ form.as_p }}
             {% endfor %}
-            <input class="btn btn-outline-primary w-100" type="submit" value="Отправить" />
+        {% endif %}
+<!--            <input class="btn btn-outline-primary w-100" type="submit" value="Отправить" />-->
         </div>
 
 </form>
