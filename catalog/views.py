@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.core.cache import cache
 from django.forms import inlineformset_factory
 
 
@@ -5,20 +7,28 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Contact, Category, Version
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
+from catalog.services import get_cached_categories
 
 
-class ProductCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.add_product'
     success_url = reverse_lazy('catalog:list')
 
-    def get_queryset(self, *args, **kwargs):
-        return Product.user.filter(is_verificated=True, is_activated=True)
+    # def get_queryset(self, *args, **kwargs):
+    #     return Product.user.filter(is_verificated=True, is_activated=True)
 
 
 class ProductListView(ListView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['category'] = get_cached_categories()
+        return context_data
 
 
     # def get_queryset(self, *args, **kwargs):
@@ -27,10 +37,11 @@ class ProductListView(ListView):
     #     return queryset
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(PermissionRequiredMixin, DetailView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:detail')
+    permission_required = 'catalog.view_product'
 
     # def get_object(self, queryset=None):
     #     self.object = super().get_object(queryset)
@@ -38,10 +49,25 @@ class ProductDetailView(DetailView):
     #     self.object.save()
     #     return self.object
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        if settings.CACHE_ENABLED:
+            version_list = cache.get(f'version_list_{self.object.pk}')
+            if version_list is None:
+                version_list = self.object.version_set.all()
+                cache.set(f'{self.object.pk}', version_list)
+        else:
+            version_list = self.object.version_set.all()
+        context_data['versions'] = version_list
+        return context_data
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+
+
+
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'catalog.change_product'
 
 
     def get_context_data(self, **kwargs):
@@ -67,6 +93,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
+    permission_required = 'catalog.delete_product'
+
 
 
 class ContactCreateView(CreateView):

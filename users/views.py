@@ -2,7 +2,7 @@ import random
 
 from django.contrib.auth.views import LoginView as BaseLoginView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
-from django.core.mail import send_mail
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
@@ -10,6 +10,7 @@ from django.views.generic import CreateView, UpdateView
 from config import settings
 from users.forms import UserForm, UserRegisterForm
 from users.models import User
+from users.services import _send_mail_email, _send_mail_password
 
 
 class LoginView(BaseLoginView):
@@ -28,12 +29,7 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        send_mail(
-            subject='Поздравление',
-            message=f'Подтвердите вашу почту и перейдите по ссылке http://127.0.0.1:8000/users/verification/{self.object.id}',
-            from_email=settings.EMAIL_HOST_USER,
-            recipient_list=[self.object.email]
-        )
+        _send_mail_email(self.object.id, self.object.email)
 
 
 class UserUpdateView(UpdateView):
@@ -46,14 +42,9 @@ class UserUpdateView(UpdateView):
 
 def generate_new_password(request):
     new_password = ''.join([str(random.randint(0, 9) for _ in range(6))])
-    send_mail(
-        subject='Вы сменили пароль',
-        message=f'Ваш новый пароль{new_password}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[request.user.email]
-    )
     request.user.set_password(new_password)
     request.user.save()
+    _send_mail_password(new_password, request.user.email)
     return redirect(reverse('users:profile'))
 
 

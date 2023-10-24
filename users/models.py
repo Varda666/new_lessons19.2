@@ -1,3 +1,4 @@
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
@@ -41,9 +42,11 @@ class User(AbstractUser):
     is_verificated = models.BooleanField(default=False, verbose_name='Подтверждение почты')
     is_activated = models.BooleanField(default=False, verbose_name='Статус пользователя')
 
+
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
 
 

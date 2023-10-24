@@ -30,6 +30,11 @@
 
         </div>
         <div class="card-body">
+           {% for version in versions %}
+                {{ version }}
+           {% endfor %}
+        </div>
+        <div class="card-body">
             {{ formset.management_form }}
             {% for form in formset.forms %}
                 {{ form.as_p }}
