@@ -14,6 +14,7 @@ from users.services import _send_mail_email, _send_mail_password
 
 
 class LoginView(BaseLoginView):
+    #success_url = reverse_lazy('users:profile')
     template_name = 'users/login.html'
 
 
@@ -29,7 +30,8 @@ class RegisterView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        _send_mail_email(self.object.id, self.object.email)
+        _send_mail_email(self.object.email)
+        return super().form_valid(form)
 
 
 class UserUpdateView(UpdateView):
@@ -41,11 +43,11 @@ class UserUpdateView(UpdateView):
         return self.request.user
 
 def generate_new_password(request):
-    new_password = ''.join([str(random.randint(0, 9) for _ in range(6))])
+    new_password = ''.join([str(random.randint(0, 9)) for _ in range(6)])
     request.user.set_password(new_password)
     request.user.save()
     _send_mail_password(new_password, request.user.email)
-    return redirect(reverse('users:profile'))
+    return redirect(reverse('users:login'))
 
 
 def verificate_user(request):
